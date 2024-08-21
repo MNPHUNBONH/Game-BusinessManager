@@ -1,0 +1,22 @@
+[
+  {
+    "Name": "Gasoline Station",
+    "Price": 10000,
+    "Income": 1000
+  },
+  {
+    "Name": "Cafe VARKA",
+    "Price": 20000,
+    "Income": 2000
+  },
+  {
+    "Name": "Carshop",
+    "Price": 50000,
+    "Income": 5000
+  },
+  {
+    "Name": "SPA",
+    "Price": 100000,
+    "Income": 10000
+  }
+]

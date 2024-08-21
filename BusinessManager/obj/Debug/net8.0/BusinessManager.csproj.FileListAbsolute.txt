@@ -1,0 +1,14 @@
+/Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.GeneratedMSBuildEditorConfig.editorconfig
+/Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.AssemblyInfoInputs.cache
+/Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.AssemblyInfo.cs
+/Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.csproj.CoreCompileInputs.cache
+/Users/valera/rider projects/BusinessManager/BusinessManager/bin/Debug/net8.0/BusinessManager
+/Users/valera/rider projects/BusinessManager/BusinessManager/bin/Debug/net8.0/BusinessManager.deps.json
+/Users/valera/rider projects/BusinessManager/BusinessManager/bin/Debug/net8.0/BusinessManager.runtimeconfig.json
+/Users/valera/rider projects/BusinessManager/BusinessManager/bin/Debug/net8.0/BusinessManager.dll
+/Users/valera/rider projects/BusinessManager/BusinessManager/bin/Debug/net8.0/BusinessManager.pdb
+/Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.dll
+/Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/refint/BusinessManager.dll
+/Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.pdb
+/Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.genruntimeconfig.cache
+/Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/ref/BusinessManager.dll
