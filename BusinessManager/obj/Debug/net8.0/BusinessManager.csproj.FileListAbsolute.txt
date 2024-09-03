@@ -12,3 +12,4 @@
 /Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.pdb
 /Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.genruntimeconfig.cache
 /Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/ref/BusinessManager.dll
+/Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.sourcelink.json

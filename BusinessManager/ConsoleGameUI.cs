@@ -4,18 +4,20 @@ public class ConsoleGameUI : IGameUI
 {
 	public void DisplayMenu()
 	{
-		throw new NotImplementedException();
+		Console.WriteLine("Выберите действие:\n" +
+		                  "1.Купить бизнес.\n" +
+		                  "2.Выйти из игры");
+		Console.WriteLine();
 	}
 
 	public string GetUserInput()
 	{
-		throw new NotImplementedException();
+		Console.Write("Введите ваш выбор:");
+		return Console.ReadLine();
+		
 	}
 
-	public string GetBusinessName()
-	{
-		throw new NotImplementedException();
-	}
+	public string GetBusinessName(Business business) => business.Name;
 
 	public double GetBusinessIncome()
 	{

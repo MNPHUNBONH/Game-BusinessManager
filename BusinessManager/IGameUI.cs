@@ -4,7 +4,7 @@ public interface IGameUI
 {
 	public void DisplayMenu();
 	public string GetUserInput();
-	public string GetBusinessName();
+	public string GetBusinessName(Business business);
 	public double GetBusinessIncome();
 	public double GetBusinessUpgradeCost();
 	public int GetBusinessIndex(int maxIndex);
