@@ -2,9 +2,9 @@ namespace BusinessManager;
 
 public class Upgrade
 {
-	private string Name;
-	private int Cost;
-	private int IncomeMultiplier;
+	public string Name { get; private set; }
+	public int Cost { get; private set; }
+	public int IncomeMultiplier { get; private set; }
 
 	public Upgrade(string name, int cost, int incomeMultiplier)
 	{
@@ -12,6 +12,4 @@ public class Upgrade
 		Cost = cost;
 		IncomeMultiplier = incomeMultiplier;
 	}
-	
-	public void Apply(Business business){}
 }

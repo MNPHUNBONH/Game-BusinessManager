@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "AN6EMKyHKgBZEve/Tc3GtXjUzyia6EUH/XjP9ERR/ybzVpADfckc46DoNb7InKVcJRMHVQi8lZmMU/sEQ56Bcw==",
+  "dgSpecHash": "Tnu1n0tbKegAebTIq8Av2QMfqWJYjCe60L+QFidNtPtPkfRS2F4wDaQtiywbRM4jhhHXBAMCAxWxDKk+XTQ4gA==",
   "success": true,
   "projectFilePath": "/Users/valera/rider projects/BusinessManager/BusinessManager/BusinessManager.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/valera/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

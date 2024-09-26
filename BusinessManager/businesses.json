@@ -2,21 +2,69 @@
   {
     "Name": "Gasoline Station",
     "Price": 10000,
-    "Income": 1000
+    "Income": 1000,
+    "Upgrades": [
+      {
+        "Name": "Улучшение 1",
+        "IncomeMultiplier": 100,
+        "Cost": 200
+      },
+      {
+        "Name": "Улучшение 2",
+        "IncomeMultiplier": 150,
+        "Cost": 300
+      }
+    ]
   },
   {
     "Name": "Cafe VARKA",
     "Price": 20000,
-    "Income": 2000
+    "Income": 2000,
+    "Upgrades": [
+      {
+        "Name": "Улучшение 1",
+        "IncomeMultiplier": 100,
+        "Cost": 200
+      },
+      {
+        "Name": "Улучшение 2",
+        "IncomeMultiplier": 150,
+        "Cost": 300
+      }
+    ]
   },
   {
     "Name": "Carshop",
     "Price": 50000,
-    "Income": 5000
+    "Income": 5000,
+    "Upgrades": [
+      {
+        "Name": "Улучшение 1",
+        "IncomeMultiplier": 100,
+        "Cost": 200
+      },
+      {
+        "Name": "Улучшение 2",
+        "IncomeMultiplier": 150,
+        "Cost": 300
+      }
+    ]
   },
   {
     "Name": "SPA",
     "Price": 100000,
-    "Income": 10000
+    "Income": 10000,
+    "Upgrades": [
+      {
+        "Name": "Улучшение 1",
+        "IncomeMultiplier": 100,
+        "Cost": 200
+      },
+      {
+        "Name": "Улучшение 2",
+        "IncomeMultiplier": 150,
+        "Cost": 300
+      }
+    ]
   }
 ]

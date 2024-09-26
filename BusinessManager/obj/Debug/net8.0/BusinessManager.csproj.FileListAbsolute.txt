@@ -13,3 +13,6 @@
 /Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.genruntimeconfig.cache
 /Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/ref/BusinessManager.dll
 /Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.sourcelink.json
+/Users/valera/rider projects/BusinessManager/BusinessManager/bin/Debug/net8.0/Newtonsoft.Json.dll
+/Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/BusinessManager.csproj.AssemblyReference.cache
+/Users/valera/rider projects/BusinessManager/BusinessManager/obj/Debug/net8.0/Business.58238C2C.Up2Date

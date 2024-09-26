@@ -4,106 +4,146 @@ namespace BusinessManager
 {
 	public class Game
 	{
+		//private event Action<> 
+		private Timer incomeTimer;
 		private Player _player;
 		private IGameUI _gameUi;
-		public static List<Business>? Shop = new List<Business>();
+		private static List<Business>? _shopBusinesses = new List<Business>();
 
 		public Game(Player player, IGameUI gameUi)
 		{
 			_player = player;
 			_gameUi = gameUi;
+			incomeTimer = new Timer(_ => _player.CollectIncome(), null, 5000, 2000);
 		}
 
 		public void Start()
 		{
-			ReadJson();
+			LoadBussines();
 			while (true)
 			{
-				Console.Clear();
-				PrintInformationAboutPlayer();
+				Thread.Sleep(1000);
+				_gameUi.DisplayClear();
+				_gameUi.ShowInformationAboutPlayer(_player);
 				_gameUi.DisplayMenu();
 				switch (_gameUi.GetUserInput())
 				{
 					case "1":
-						Console.WriteLine("Выберите бизнес для покупки:");
-						PrintInformationBusinesses();
-						PlayerBuyBussines(Convert.ToInt32(_gameUi.GetUserInput()));
+						var businesseWithUphrades = _player.Businesses.Where(business => business.Upgrades.Count > 0).ToList();
+						
+						if (businesseWithUphrades.Count == 0)
+						{
+							_gameUi.DisplayMessege("Нету бизнесов для улучшения");
+							break;
+						}
+						
+						_gameUi.DisplayMessege("Выберите бизнес:");
+						for (var index = 0; index < businesseWithUphrades.Count; index++)
+						{
+							_gameUi.DisplayMessege(
+								$"{index + 1}. Выбрать бизнес {_gameUi.GetBusinessName(businesseWithUphrades[index])} " +
+								$"| Доход: {_gameUi.GetBusinessIncome(businesseWithUphrades[index])}");
+						}
+
+						var businessIndex = _gameUi.GetIndex(businesseWithUphrades.Count) - 1; // где лучше сделать проверку в консоли или тут ?
+						
+						if (businessIndex >= 0 && businessIndex < businesseWithUphrades.Count) 
+							UpgradeBussines(businesseWithUphrades[businessIndex]);
+						
+						else _gameUi.DisplayMessege("Неверный номер бизнеса");
+
 						break;
-					
+
 					case "2":
+						if (_shopBusinesses.Count == 0)
+						{
+							_gameUi.DisplayMessege("Все бизнесы проданы!");
+							break;
+						}
+
+						_gameUi.DisplayMessege("Выберите бизнес для покупки:");
+						for (int i = 0; i < _shopBusinesses.Count; i++)
+							_gameUi.DisplayMessege($"{i + 1}. {_gameUi.GetBusinessName(_shopBusinesses[i])} " +
+							                       $"| " + $"Доход: {_gameUi.GetBusinessIncome(_shopBusinesses[i])} " +
+							                       $"|" + $" Цена: {_gameUi.GetBusinessCost(_shopBusinesses[i])}$");
+
+						BuyBussines();
+						break;
+
+					case "3":
+						_gameUi.DisplayMessege("Game over!");
 						return;
-					
+
 					default:
-						Console.WriteLine("Неверный ввод");
+						_gameUi.DisplayMessege("Неверный ввод");
 						break;
 				}
 			}
 		}
-
-
-		public void SaveJson()
+		private void SaveBussines()
 		{
-			var jsonString = JsonSerializer.Serialize(Shop, new JsonSerializerOptions() { WriteIndented = true });
+			var jsonString =
+				JsonSerializer.Serialize(_shopBusinesses, new JsonSerializerOptions() { WriteIndented = true });
 			var path = "/Users/valera/rider projects/BusinessManager/BusinessManager/businesses.json";
 			File.WriteAllText(path, jsonString);
 		}
 
-		public void ReadJson()
+		private void LoadBussines()
 		{
 			var path = "/Users/valera/rider projects/BusinessManager/BusinessManager/businesses.json";
 			if (File.Exists(path))
 			{
 				var jsonString = File.ReadAllText(path);
 				// Десериализация JSON-строки в список объектов Business
-				Shop = JsonSerializer.Deserialize<List<Business>>(jsonString);
+				_shopBusinesses = JsonSerializer.Deserialize<List<Business>>(jsonString);
 			}
 			else
 			{
-				Console.WriteLine("File not found.");
+				_gameUi.DisplayMessege("File not found.");
 			}
 		}
 
-		public void PlayerBuyBussines(int numberBussnes)
+		private void BuyBussines()
 		{
-			if (_player.BuyBusiness(Shop[numberBussnes - 1]))
+			var indexBussines = _gameUi.GetIndex(_shopBusinesses.Count) - 1;
+
+			if (_player.Money >= _shopBusinesses[indexBussines].Price)
 			{
-				Console.WriteLine("Покупка бизнеса прошла успешно");
-				Shop.Remove(Shop[numberBussnes - 1]);
+				_player.BuyBusiness(_shopBusinesses[indexBussines]);
+				_gameUi.DisplayMessege("Покупка бизнеса прошла успешно.");
 			}
-			else
-			{
-				Console.WriteLine("Сделка провалена!");
-			}
+			else _gameUi.DisplayMessege("Недостаточно средств. Сделка провалена!");
 		}
 
-		public void PrintInformationAboutPlayer()
+		private void UpgradeBussines(Business business)
 		{
-			Console.WriteLine($"Владелец: {_player.Name}. Денег на счету:{_player.Money}$");
-			if (_player.Businesses != null)
+			_gameUi.DisplayMessege("Выберите улучшение для бизнеса:");
+			for (int i = 0; i < business.Upgrades.Count; i++)
 			{
-				Console.WriteLine($"{_player.Name} имеет следующие бизнесы :");
-				for (int i = 0; i < _player.Businesses.Count; i++)
-				{
-					Console.WriteLine(
-						$"{i + 1}. {_player.Businesses[i].Name} | Доход: {_player.Businesses[i].Income}$");
-				}
+				_gameUi.DisplayMessege($"{i+1}. {_gameUi.GetUpgradeName(business.Upgrades[i])} " +
+				                       $"| Увеличит доход: {_gameUi.GetIncomeMultiplier(business.Upgrades[i])} " +
+				                       $"| Цена: {_gameUi.GetUpgradeCost(business.Upgrades[i])}");
 			}
-			else
-			{
-				Console.WriteLine("У игрока нету бизнеса");
-			}
+			
+			var upgradeIndex = _gameUi.GetIndex(business.Upgrades.Count) - 1;
 
-			Console.WriteLine();
+			if (upgradeIndex >= 0 && upgradeIndex < business.Upgrades.Count)
+				_player.UpgradeBusiness(business, upgradeIndex);
+			else _gameUi.DisplayMessege("Недостаточно денег!");
 		}
 
-		public void PrintInformationBusinesses()
+		private void CollectIncome()
 		{
-			for (var i = 0; i < Shop.Count; i++)
+			int generalIncome = 0;
+			foreach (var business in _player.Businesses)
 			{
-				Console.WriteLine($"{i + 1}. {Shop[i].Name} | Доход: {Shop[i].Income}$ | Цена: {Shop[i].Price}$");
+				generalIncome += business.Income;
 			}
 
-			Console.WriteLine();
+			((ConsoleGameUI)_gameUi).DisplayMessege($"Бизнесы {_player.Name} принес доход: {generalIncome}",
+				ConsoleColor.Red);
+			_player.CollectIncome();
+			((ConsoleGameUI)_gameUi).DisplayMessege($"Теперь ваш балас составляет: {_player.Money}", ConsoleColor.Red);
 		}
 	}
 }

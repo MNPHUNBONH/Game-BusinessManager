@@ -4,34 +4,28 @@ public class Player
 {
 	public string Name { get; }
 	public int Money { get; private set; }
-	
 	public List<Business> Businesses { get; private set;}
-
 	public Player(string name, int startBalanse)
 	{
 		Name = name;
 		Money = startBalanse;
 		Businesses = new List<Business>(){new Business("Ларек",1000,100)};
+		Businesses[0].Upgrades.Add(new Upgrade("Расширение ассортимента", 100,50));
 	}
 
-	public bool BuyBusiness(Business business)
+	public void BuyBusiness(Business business)
 	{
-		if (Money > business.Price)
-		{
 			Money -= business.Price;
 			Businesses.Add(business);
-			return true;
-		}
-		else
-		{
-			Console.WriteLine("Недостаточно средств для покупки!");
-			return false;
-		}
-		
 	}
-	
 
-	public void UpgradeBusiness(int index){}
-	public void CollectIncome(){}
-	
+	public void UpgradeBusiness(Business business, int indexGrade)
+	{
+		Money -= business.Upgrades[indexGrade].Cost;
+		business.Upgrade(indexGrade);
+	}
+	public void CollectIncome()
+	{
+		foreach (var business in Businesses) Money += business.Income;
+	}
 }
