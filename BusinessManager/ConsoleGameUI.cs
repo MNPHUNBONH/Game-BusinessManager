@@ -30,22 +30,9 @@ public class ConsoleGameUI : IGameUI
 		}
 		else Console.WriteLine("У игрока нету бизнеса");
 	}
-
-	public string GetInformationAboutBusiness(Business business) => $"{business.Name} | " +
-	                                                                $"Доход: {business.Income}$ |" +
-	                                                                $" Цена: {business.Price}$";
-
-	public string GetInformationAboutUpgrade(Upgrade upgrade) => $"{upgrade.Name} |" +
-	                                                             $" Увеличит доход:{upgrade.IncomeMultiplier}|" +
-	                                                             $" Цена:{upgrade.Cost}  ";
-
 	public string GetBusinessName(Business business) => business.Name;
 	public double GetBusinessCost(Business business) => business.Price;
 	public double GetBusinessIncome(Business business) => business.Income;
-	public double GetBusinessUpgradeCost(Business business)
-	{
-		throw new NotImplementedException();
-	}
 	public int GetIndex(int maxIndex)
 	{
 		Console.Write("Введите ваш выбор:");

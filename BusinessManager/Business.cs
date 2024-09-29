@@ -20,7 +20,4 @@ public class Business
 		Income += Upgrades[index].IncomeMultiplier;
 		Upgrades.RemoveAt(index);
 	} 
-	
-	public void GetUpgradeCost(){}
-	
 }

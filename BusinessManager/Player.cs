@@ -2,8 +2,10 @@ namespace BusinessManager;
 
 public class Player
 {
+	public event EventHandler even;
 	public string Name { get; }
 	public int Money { get; private set; }
+	public int Income { get; private set; }
 	public List<Business> Businesses { get; private set;}
 	public Player(string name, int startBalanse)
 	{
@@ -26,6 +28,12 @@ public class Player
 	}
 	public void CollectIncome()
 	{
-		foreach (var business in Businesses) Money += business.Income;
+		foreach (var business in Businesses) Income += business.Income;
 	}
+
+	public void GetIncome()
+	{
+		Money += Income;
+		Income = 0;
+	} 
 }

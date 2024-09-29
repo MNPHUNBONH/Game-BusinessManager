@@ -4,33 +4,34 @@ namespace BusinessManager
 {
 	public class Game
 	{
-		//private event Action<> 
 		private Timer incomeTimer;
-		private Player _player;
-		private IGameUI _gameUi;
-		private static List<Business>? _shopBusinesses = new List<Business>();
+		private Player _player;// хранит обьект игрока
+		private IGameUI _gameUi;//хранит обькт интерфейса
+		private static List<Business>? _shopBusinesses = new List<Business>();// обьекты бизнесов которые можно купить
+		private int _inkome = 0;
 
 		public Game(Player player, IGameUI gameUi)
 		{
 			_player = player;
 			_gameUi = gameUi;
-			incomeTimer = new Timer(_ => _player.CollectIncome(), null, 5000, 2000);
+			incomeTimer = new Timer(_ => _player.CollectIncome(), null, 1000, 2000);
 		}
 
 		public void Start()
 		{
-			LoadBussines();
+			LoadBussines();//загружаем бизнесы из файла
 			while (true)
 			{
 				Thread.Sleep(1000);
-				_gameUi.DisplayClear();
-				_gameUi.ShowInformationAboutPlayer(_player);
-				_gameUi.DisplayMenu();
+				_gameUi.DisplayClear();//очищаем консоль перед каждым новым действием пользователя
+				_gameUi.ShowInformationAboutPlayer(_player);// показывает информацию о пользователе
+				_gameUi.DisplayMenu();//выводит меню игры
 				switch (_gameUi.GetUserInput())
 				{
 					case "1":
+						CollectIncome();
 						var businesseWithUphrades = _player.Businesses.Where(business => business.Upgrades.Count > 0).ToList();
-						
+						//список всех бизнесов игрока у которыех есть улучшения
 						if (businesseWithUphrades.Count == 0)
 						{
 							_gameUi.DisplayMessege("Нету бизнесов для улучшения");
@@ -46,15 +47,16 @@ namespace BusinessManager
 						}
 
 						var businessIndex = _gameUi.GetIndex(businesseWithUphrades.Count) - 1; // где лучше сделать проверку в консоли или тут ?
-						
-						if (businessIndex >= 0 && businessIndex < businesseWithUphrades.Count) 
-							UpgradeBussines(businesseWithUphrades[businessIndex]);
+						//выбираем индекс бизнеса
+						if (businessIndex >= 0 && businessIndex < businesseWithUphrades.Count) //если он валидный 
+							UpgradeBussines(businesseWithUphrades[businessIndex]);//вызываем метод через который будем улучшать бизнес
 						
 						else _gameUi.DisplayMessege("Неверный номер бизнеса");
 
 						break;
 
 					case "2":
+						CollectIncome();
 						if (_shopBusinesses.Count == 0)
 						{
 							_gameUi.DisplayMessege("Все бизнесы проданы!");
@@ -134,15 +136,9 @@ namespace BusinessManager
 
 		private void CollectIncome()
 		{
-			int generalIncome = 0;
-			foreach (var business in _player.Businesses)
-			{
-				generalIncome += business.Income;
-			}
-
-			((ConsoleGameUI)_gameUi).DisplayMessege($"Бизнесы {_player.Name} принес доход: {generalIncome}",
+			((ConsoleGameUI)_gameUi).DisplayMessege($"Бизнесы {_player.Name} принес доход: {_player.Income}",
 				ConsoleColor.Red);
-			_player.CollectIncome();
+			_player.GetIncome();
 			((ConsoleGameUI)_gameUi).DisplayMessege($"Теперь ваш балас составляет: {_player.Money}", ConsoleColor.Red);
 		}
 	}
