@@ -16,33 +16,14 @@ public class ConsoleGameUI : IGameUI
 		Console.Write("Введите вашь выбор:");
 		return Console.ReadLine();
 	}
-
-	public void ShowInformationAboutPlayer(Player player)
-	{
-		Console.WriteLine($"Владелец: {player.Name}. Денег на счету:{player.Money}$");
-		if (player.Businesses != null)
-		{
-			Console.WriteLine($"{player.Name} имеет следующие бизнесы :");
-			for (int i = 0; i < player.Businesses.Count; i++)
-			{
-				Console.WriteLine($"{i + 1}. {player.Businesses[i].Name} | Доход: {player.Businesses[i].Income}$");
-			}
-		}
-		else Console.WriteLine("У игрока нету бизнеса");
-	}
-	public string GetBusinessName(Business business) => business.Name;
-	public double GetBusinessCost(Business business) => business.Price;
-	public double GetBusinessIncome(Business business) => business.Income;
+	
 	public int GetIndex(int maxIndex)
 	{
 		Console.Write("Введите ваш выбор:");
 		var indexInput = Convert.ToInt32(Console.ReadLine());
 		return indexInput - 1 > maxIndex || indexInput - 1 < 0 ? -1 : indexInput;
 	}
-	public string GetUpgradeName(Upgrade upgrade) => upgrade.Name;
-	public double GetUpgradeCost(Upgrade upgrade) => upgrade.Cost;
-	public double GetIncomeMultiplier(Upgrade upgrade) => upgrade.IncomeMultiplier;
-	public void DisplayMessege(string message) => Console.WriteLine(message);
+	public void DisplayMessage(string message) => Console.WriteLine(message);
 
 	public void DisplayMessege(string message, ConsoleColor color)
 	{

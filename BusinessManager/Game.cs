@@ -2,144 +2,188 @@ using System.Text.Json;
 
 namespace BusinessManager
 {
-	public class Game
-	{
-		private Timer incomeTimer;
-		private Player _player;// хранит обьект игрока
-		private IGameUI _gameUi;//хранит обькт интерфейса
-		private static List<Business>? _shopBusinesses = new List<Business>();// обьекты бизнесов которые можно купить
-		private int _inkome = 0;
+    public class Game
+    {
+        private Timer incomeTimer;
+        private Player _player; // хранит обьект игрока
+        private IGameUI _gameUi; //хранит обькт интерфейса
+        private static List<Business>? _shopBusinesses = new List<Business>(); // обьекты бизнесов которые можно купить
+        private const string BusinessesFilePath = "../../../businesses.json";
+        private int _inсome = 0;
 
-		public Game(Player player, IGameUI gameUi)
-		{
-			_player = player;
-			_gameUi = gameUi;
-			incomeTimer = new Timer(_ => _player.CollectIncome(), null, 1000, 2000);
-		}
+        public Game(Player player, IGameUI gameUi)
+        {
+            _player = player;
+            _gameUi = gameUi;
+            incomeTimer = new Timer(_ => _player.CollectIncome(), null, 1000, 2000);
+        }
 
-		public void Start()
-		{
-			LoadBussines();//загружаем бизнесы из файла
-			while (true)
-			{
-				Thread.Sleep(1000);
-				_gameUi.DisplayClear();//очищаем консоль перед каждым новым действием пользователя
-				_gameUi.ShowInformationAboutPlayer(_player);// показывает информацию о пользователе
-				_gameUi.DisplayMenu();//выводит меню игры
-				switch (_gameUi.GetUserInput())
-				{
-					case "1":
-						CollectIncome();
-						var businesseWithUphrades = _player.Businesses.Where(business => business.Upgrades.Count > 0).ToList();
-						//список всех бизнесов игрока у которыех есть улучшения
-						if (businesseWithUphrades.Count == 0)
-						{
-							_gameUi.DisplayMessege("Нету бизнесов для улучшения");
-							break;
-						}
-						
-						_gameUi.DisplayMessege("Выберите бизнес:");
-						for (var index = 0; index < businesseWithUphrades.Count; index++)
-						{
-							_gameUi.DisplayMessege(
-								$"{index + 1}. Выбрать бизнес {_gameUi.GetBusinessName(businesseWithUphrades[index])} " +
-								$"| Доход: {_gameUi.GetBusinessIncome(businesseWithUphrades[index])}");
-						}
+        public void Start()
+        {
+            LoadBusinesses(); //загружаем бизнесы из файла
+            while (true)
+            {
+                Thread.Sleep(1000);
+                //_gameUi.DisplayClear();//очищаем консоль перед каждым новым действием пользователя
+                ShowPlayerInfo(); // показывает информацию о пользователе
+                _gameUi.DisplayMenu(); //выводит меню игры
+                CollectIncome();
 
-						var businessIndex = _gameUi.GetIndex(businesseWithUphrades.Count) - 1; // где лучше сделать проверку в консоли или тут ?
-						//выбираем индекс бизнеса
-						if (businessIndex >= 0 && businessIndex < businesseWithUphrades.Count) //если он валидный 
-							UpgradeBussines(businesseWithUphrades[businessIndex]);//вызываем метод через который будем улучшать бизнес
-						
-						else _gameUi.DisplayMessege("Неверный номер бизнеса");
+                switch (_gameUi.GetUserInput())
+                {
+                    case "1":
+                        ShowUpgradeMenu();
+                        break;
 
-						break;
+                    case "2":
+                        ShowPurchaseMenu();
+                        break;
 
-					case "2":
-						CollectIncome();
-						if (_shopBusinesses.Count == 0)
-						{
-							_gameUi.DisplayMessege("Все бизнесы проданы!");
-							break;
-						}
+                    case "3":
+                        _gameUi.DisplayMessage("Game over!");
+                        return;
 
-						_gameUi.DisplayMessege("Выберите бизнес для покупки:");
-						for (int i = 0; i < _shopBusinesses.Count; i++)
-							_gameUi.DisplayMessege($"{i + 1}. {_gameUi.GetBusinessName(_shopBusinesses[i])} " +
-							                       $"| " + $"Доход: {_gameUi.GetBusinessIncome(_shopBusinesses[i])} " +
-							                       $"|" + $" Цена: {_gameUi.GetBusinessCost(_shopBusinesses[i])}$");
+                    default:
+                        _gameUi.DisplayMessage("Неверный ввод");
+                        break;
+                }
+            }
+        }
 
-						BuyBussines();
-						break;
+        private void LoadBusinesses()
+        {
+            if (File.Exists(BusinessesFilePath))
+            {
+                var jsonString = File.ReadAllText(BusinessesFilePath);
+                // Десериализация JSON-строки в список объектов Business
+                _shopBusinesses = JsonSerializer.Deserialize<List<Business>>(jsonString);
+            }
+            else
+            {
+                _gameUi.DisplayMessage("File not found.");
+            }
+        }
 
-					case "3":
-						_gameUi.DisplayMessege("Game over!");
-						return;
+        private void ShowUpgradeMenu()
+        {
+            var businessesWithUpgrades = _player.Businesses.Where(b => b.Upgrades.Any()).ToList();
 
-					default:
-						_gameUi.DisplayMessege("Неверный ввод");
-						break;
-				}
-			}
-		}
-		private void SaveBussines()
-		{
-			var jsonString =
-				JsonSerializer.Serialize(_shopBusinesses, new JsonSerializerOptions() { WriteIndented = true });
-			var path = "/Users/valera/rider projects/BusinessManager/BusinessManager/businesses.json";
-			File.WriteAllText(path, jsonString);
-		}
+            if (businessesWithUpgrades.Count == 0)
+            {
+                _gameUi.DisplayMessage("Нет доступных бизнесов для улучшения.");
+                return;
+            }
 
-		private void LoadBussines()
-		{
-			var path = "/Users/valera/rider projects/BusinessManager/BusinessManager/businesses.json";
-			if (File.Exists(path))
-			{
-				var jsonString = File.ReadAllText(path);
-				// Десериализация JSON-строки в список объектов Business
-				_shopBusinesses = JsonSerializer.Deserialize<List<Business>>(jsonString);
-			}
-			else
-			{
-				_gameUi.DisplayMessege("File not found.");
-			}
-		}
+            _gameUi.DisplayMessage("Выберите бизнес для улучшения:");
+            for (var i = 0; i < businessesWithUpgrades.Count; i++)
+            {
+                var business = businessesWithUpgrades[i];
+                _gameUi.DisplayMessage($"{i + 1}. {business.Name} | Доход: {business.Income}$");
+            }
 
-		private void BuyBussines()
-		{
-			var indexBussines = _gameUi.GetIndex(_shopBusinesses.Count) - 1;
+            var businessIndex = GetValidatedIndex(businessesWithUpgrades.Count);
+            if (businessIndex == -1) return;
 
-			if (_player.Money >= _shopBusinesses[indexBussines].Price)
-			{
-				_player.BuyBusiness(_shopBusinesses[indexBussines]);
-				_gameUi.DisplayMessege("Покупка бизнеса прошла успешно.");
-			}
-			else _gameUi.DisplayMessege("Недостаточно средств. Сделка провалена!");
-		}
+            UpgradeBusiness(businessesWithUpgrades[businessIndex]);
+        }
 
-		private void UpgradeBussines(Business business)
-		{
-			_gameUi.DisplayMessege("Выберите улучшение для бизнеса:");
-			for (int i = 0; i < business.Upgrades.Count; i++)
-			{
-				_gameUi.DisplayMessege($"{i+1}. {_gameUi.GetUpgradeName(business.Upgrades[i])} " +
-				                       $"| Увеличит доход: {_gameUi.GetIncomeMultiplier(business.Upgrades[i])} " +
-				                       $"| Цена: {_gameUi.GetUpgradeCost(business.Upgrades[i])}");
-			}
-			
-			var upgradeIndex = _gameUi.GetIndex(business.Upgrades.Count) - 1;
+        private void ShowPurchaseMenu()
+        {
+            if (_shopBusinesses is null || _shopBusinesses.Count == 0)
+            {
+                _gameUi.DisplayMessage("Все бизнесы проданы.");
+                return;
+            }
 
-			if (upgradeIndex >= 0 && upgradeIndex < business.Upgrades.Count)
-				_player.UpgradeBusiness(business, upgradeIndex);
-			else _gameUi.DisplayMessege("Недостаточно денег!");
-		}
+            _gameUi.DisplayMessage("Выберите бизнес для покупки:");
+            for (var i = 0; i < _shopBusinesses.Count; i++)
+            {
+                var business = _shopBusinesses[i];
+                _gameUi.DisplayMessage(
+                    $"{i + 1}. {business.Name} | Доход: {business.Income}$ | Цена: {business.Price}$");
+            }
 
-		private void CollectIncome()
-		{
-			((ConsoleGameUI)_gameUi).DisplayMessege($"Бизнесы {_player.Name} принес доход: {_player.Income}",
-				ConsoleColor.Red);
-			_player.GetIncome();
-			((ConsoleGameUI)_gameUi).DisplayMessege($"Теперь ваш балас составляет: {_player.Money}", ConsoleColor.Red);
-		}
-	}
+            var businessIndex = GetValidatedIndex(_shopBusinesses.Count);
+            if (businessIndex == -1) return;
+
+            BuyBusiness(businessIndex);
+        }
+
+        private void BuyBusiness(int indexBussines)
+        {
+            if (_player.Money < _shopBusinesses[indexBussines].Price)
+            {
+                _gameUi.DisplayMessage("Недостаточно средств. Сделка провалена!");
+                return;
+            }
+
+            _player.BuyBusiness(_shopBusinesses[indexBussines]);
+            _gameUi.DisplayMessage("Покупка бизнеса прошла успешно.");
+        }
+
+        private void UpgradeBusiness(Business business)
+        {
+            _gameUi.DisplayMessage("Выберите улучшение:");
+            for (var i = 0; i < business.Upgrades.Count; i++)
+            {
+                var upgrade = business.Upgrades[i];
+                _gameUi.DisplayMessage(
+                    $"{i + 1}. {upgrade.Name} | Доход: {upgrade.IncomeMultiplier} | Цена: {upgrade.Cost}$");
+            }
+
+            var upgradeIndex = GetValidatedIndex(business.Upgrades.Count);
+            if (upgradeIndex == -1)
+            {
+                _gameUi.DisplayMessage("Неверный номер улучшения.");
+                return;
+            }
+
+            if (_player.Money < _shopBusinesses[upgradeIndex].Price)
+            {
+                _gameUi.DisplayMessage("Недостаточно средств для покупки улучшения!!");
+                return;
+            }
+
+            _player.UpgradeBusiness(business, upgradeIndex);
+            _gameUi.DisplayMessage("Улучшение куплено успешно!");
+        }
+
+        private void CollectIncome()
+        {
+            ((ConsoleGameUI)_gameUi).DisplayMessege($"Бизнесы {_player.Name} принес доход: {_player.Income}",
+                ConsoleColor.Red);
+            _player.GetIncome();
+            ((ConsoleGameUI)_gameUi).DisplayMessege($"Теперь ваш балас составляет: {_player.Money}", ConsoleColor.Red);
+        }
+
+        private void ShowPlayerInfo()
+        {
+            _gameUi.DisplayMessage($"Игрок: {_player.Name}. Баланс: {_player.Money}$");
+
+            if (_player.Businesses.Count == 0)
+            {
+                _gameUi.DisplayMessage("У игрока нет бизнесов.");
+                return;
+            }
+
+            _gameUi.DisplayMessage("Ваши бизнесы:");
+            for (var i = 0; i < _player.Businesses.Count; i++)
+            {
+                var business = _player.Businesses[i];
+                _gameUi.DisplayMessage($"{i + 1}. {business.Name} | Доход: {business.Income}$");
+            }
+        }
+
+        private int GetValidatedIndex(int count)
+        {
+            var index = _gameUi.GetIndex(count) - 1;
+            if (index < 0 || index >= count)
+            {
+                _gameUi.DisplayMessage("Неверный ввод.");
+                return -1;
+            }
+
+            return index;
+        }
+    }
 }

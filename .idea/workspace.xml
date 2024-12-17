@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8031b573-3faa-4f81-a935-1c4d75812448" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/BusinessManager/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/Game.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManager/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManager/obj/BusinessManager.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/obj/BusinessManager.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManager/obj/BusinessManager.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/obj/BusinessManager.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManager/obj/Debug/net8.0/BusinessManager.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/obj/Debug/net8.0/BusinessManager.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManager/obj/Debug/net8.0/BusinessManager.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/obj/Debug/net8.0/BusinessManager.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManager/obj/Debug/net8.0/BusinessManager.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/obj/Debug/net8.0/BusinessManager.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManager/obj/Debug/net8.0/BusinessManager.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/obj/Debug/net8.0/BusinessManager.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManager/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManager/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManager/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManager/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManager/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManager/obj/rider.project.restore.info" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "MNPHUNBONH"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/MNPHUNBONH/Game-BusinessManager.git",
+    "accountId": "eed49a92-786a-497b-8494-596e813cc1a8"
+  }
+}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2qAOMMnFcGq5YJgd3TBvQQgRf47" />
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-WS-243.21565.180" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8031b573-3faa-4f81-a935-1c4d75812448" name="Changes" comment="" />
+      <created>1734101863686</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1734101863686</updated>
+      <workItem from="1734101864943" duration="29000" />
+      <workItem from="1734101898737" duration="27000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
