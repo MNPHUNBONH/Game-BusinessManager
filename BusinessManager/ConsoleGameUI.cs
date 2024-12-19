@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace BusinessManager;
 
 public class ConsoleGameUI : IGameUI
@@ -20,18 +22,34 @@ public class ConsoleGameUI : IGameUI
 	public int GetIndex(int maxIndex)
 	{
 		Console.Write("Введите ваш выбор:");
-		var indexInput = Convert.ToInt32(Console.ReadLine());
-		return indexInput - 1 > maxIndex || indexInput - 1 < 0 ? -1 : indexInput;
+		var indexInput = Convert.ToInt32(Console.ReadLine())-1;
+		return indexInput  > maxIndex || indexInput < 0 ? -1 : indexInput;
 	}
 	public void DisplayMessage(string message) => Console.WriteLine(message);
 
-	public void DisplayMessege(string message, ConsoleColor color)
+	public void DisplayMessage(string message, ColorMessage colorMessage)
 	{
-		Console.ForegroundColor = color;
+		switch (colorMessage)
+		{
+			case ColorMessage.Red:
+				Console.ForegroundColor = ConsoleColor.Red;
+				break;
+			case ColorMessage.Green:
+				Console.ForegroundColor = ConsoleColor.Green;
+				break;
+			case ColorMessage.Blue:
+				Console.ForegroundColor = ConsoleColor.Blue;
+				break;
+			default:
+				Console.ForegroundColor = ConsoleColor.White;	
+				break;
+		}
+		
 		Console.WriteLine(message);
 		Console.ResetColor();
 		Console.WriteLine();
 	}
 
 	public void DisplayClear() => Console.Clear();
+	
 }

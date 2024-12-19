@@ -2,9 +2,7 @@ namespace BusinessManager;
 
 public class Player
 {
-	public event EventHandler even;
-	public event Action BusinessPurchased;
-	public event Action BalanceChanged;
+	public event Action<string,ColorMessage> OnBalanceChanged;
 	public string Name { get; }
 	public int Money { get; private set; }
 	public int Income { get; private set; }
@@ -13,19 +11,21 @@ public class Player
 	{
 		Name = name;
 		Money = startBalanсe;
-		Businesses = new List<Business>(){new Business("Ларек",1000,100)};
-		Businesses[0].Upgrades.Add(new Upgrade("Расширение ассортимента", 100,50));
+		Businesses = new List<Business>();
 	}
 
 	public void BuyBusiness(Business business)
 	{
 			Money -= business.Price;
+			OnBalanceChanged($"Ваш баланс изменился: {Money}",ColorMessage.Red);
 			Businesses.Add(business);
+			OnBalanceChanged($"Вы приобрели новый бизнес: {business.Name}", ColorMessage.Green);
 	}
 
 	public void UpgradeBusiness(Business business, int indexGrade)
 	{
 		Money -= business.Upgrades[indexGrade].Cost;
+		OnBalanceChanged($"Ваш баланс изменился: {Money}",ColorMessage.Red);
 		business.Upgrade(indexGrade);
 	}
 	public void CollectIncome()
@@ -36,6 +36,7 @@ public class Player
 	public void GetIncome()
 	{
 		Money += Income;
+		OnBalanceChanged($"Ваш баланс изменился: {Money}",ColorMessage.Red);
 		Income = 0;
 	} 
 }

@@ -1,5 +1,22 @@
 [
   {
+    "Name": "Ларек",
+    "Price": 1000,
+    "Income": 100,
+    "Upgrades": [
+      {
+        "Name": "Улучшение 1",
+        "IncomeMultiplier": 100,
+        "Cost": 200
+      },
+      {
+        "Name": "Улучшение 2",
+        "IncomeMultiplier": 150,
+        "Cost": 300
+      }
+    ]
+  },
+  {
     "Name": "Gasoline Station",
     "Price": 10000,
     "Income": 1000,

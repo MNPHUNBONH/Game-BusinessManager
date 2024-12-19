@@ -2,12 +2,18 @@ using System.Text.Json;
 
 namespace BusinessManager
 {
+    public enum ColorMessage
+    {
+        Red,
+        Green,
+        Blue
+    }
     public class Game
     {
         private Timer incomeTimer;
         private Player _player; // хранит обьект игрока
         private IGameUI _gameUi; //хранит обькт интерфейса
-        private static List<Business>? _shopBusinesses = new List<Business>(); // обьекты бизнесов которые можно купить
+        private List<Business>? _shopBusinesses = new List<Business>(); // обьекты бизнесов которые можно купить
         private const string BusinessesFilePath = "../../../businesses.json";
         private int _inсome = 0;
 
@@ -20,14 +26,17 @@ namespace BusinessManager
 
         public void Start()
         {
+            _player.OnBalanceChanged += _gameUi.DisplayMessage;
+            
             LoadBusinesses(); //загружаем бизнесы из файла
             while (true)
             {
-                Thread.Sleep(1000);
-                //_gameUi.DisplayClear();//очищаем консоль перед каждым новым действием пользователя
-                ShowPlayerInfo(); // показывает информацию о пользователе
-                _gameUi.DisplayMenu(); //выводит меню игры
+                Thread.Sleep(2000);
+                _gameUi.DisplayClear(); //очищаем консоль перед каждым новым действием пользователя
+                ShowPlayerInfo();
                 CollectIncome();
+                _gameUi.DisplayMenu(); //выводит меню игры
+
 
                 switch (_gameUi.GetUserInput())
                 {
@@ -150,10 +159,10 @@ namespace BusinessManager
 
         private void CollectIncome()
         {
-            ((ConsoleGameUI)_gameUi).DisplayMessege($"Бизнесы {_player.Name} принес доход: {_player.Income}",
-                ConsoleColor.Red);
+            if (_player.Income == 0) return;
+
+            _gameUi.DisplayMessage($"Бизнесы {_player.Name} принес доход: {_player.Income}", ColorMessage.Red);
             _player.GetIncome();
-            ((ConsoleGameUI)_gameUi).DisplayMessege($"Теперь ваш балас составляет: {_player.Money}", ConsoleColor.Red);
         }
 
         private void ShowPlayerInfo()
@@ -176,7 +185,7 @@ namespace BusinessManager
 
         private int GetValidatedIndex(int count)
         {
-            var index = _gameUi.GetIndex(count) - 1;
+            var index = _gameUi.GetIndex(count);
             if (index < 0 || index >= count)
             {
                 _gameUi.DisplayMessage("Неверный ввод.");
