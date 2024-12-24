@@ -6,7 +6,8 @@ namespace BusinessManager
     {
         Red,
         Green,
-        Blue
+        Blue,
+        Gray
     }
     public class Game
     {
@@ -15,7 +16,6 @@ namespace BusinessManager
         private IGameUI _gameUi; //хранит обькт интерфейса
         private List<Business>? _shopBusinesses = new List<Business>(); // обьекты бизнесов которые можно купить
         private const string BusinessesFilePath = "../../../businesses.json";
-        private int _inсome = 0;
 
         public Game(Player player, IGameUI gameUi)
         {
@@ -161,7 +161,7 @@ namespace BusinessManager
         {
             if (_player.Income == 0) return;
 
-            _gameUi.DisplayMessage($"Бизнесы {_player.Name} принес доход: {_player.Income}", ColorMessage.Red);
+            _gameUi.DisplayMessage($"Бизнесы {_player.Name} принес доход: {_player.Income}");
             _player.GetIncome();
         }
 

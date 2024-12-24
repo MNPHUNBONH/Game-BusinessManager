@@ -25,14 +25,12 @@ public class ConsoleGameUI : IGameUI
 		var indexInput = Convert.ToInt32(Console.ReadLine())-1;
 		return indexInput  > maxIndex || indexInput < 0 ? -1 : indexInput;
 	}
-	public void DisplayMessage(string message) => Console.WriteLine(message);
-
-	public void DisplayMessage(string message, ColorMessage colorMessage)
+	public void DisplayMessage(string message, ColorMessage colorMessage = ColorMessage.Gray)
 	{
 		switch (colorMessage)
 		{
-			case ColorMessage.Red:
-				Console.ForegroundColor = ConsoleColor.Red;
+			case ColorMessage.Gray:
+				Console.ForegroundColor = ConsoleColor.Gray;
 				break;
 			case ColorMessage.Green:
 				Console.ForegroundColor = ConsoleColor.Green;
@@ -40,14 +38,12 @@ public class ConsoleGameUI : IGameUI
 			case ColorMessage.Blue:
 				Console.ForegroundColor = ConsoleColor.Blue;
 				break;
-			default:
-				Console.ForegroundColor = ConsoleColor.White;	
+			case ColorMessage.Red:
+				Console.ForegroundColor = ConsoleColor.Red;	
 				break;
 		}
-		
 		Console.WriteLine(message);
 		Console.ResetColor();
-		Console.WriteLine();
 	}
 
 	public void DisplayClear() => Console.Clear();
